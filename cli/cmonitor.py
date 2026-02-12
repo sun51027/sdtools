@@ -149,8 +149,25 @@ def cmonitor(path, save = False, plot = False, table = True, neutrals = False, l
     def append_first(x):
         return np.insert(x,0,x[0])
     # Second row of plots
+
+    ### print ### 
+    # print(f"wtime = {wtime}") # wtime not accumulated
+    # print(f"wall time = {wall_time} s")
+    # print(f"wall time = {wall_time/60} min")
+    # print(f"wall time = {wall_time/(60*60)} hrs")
+    # print(f"t = {t}")
+    # print(f"t[0] = {t[0]}, t[-1] = {t[-1]}")
+    # print(f"stime = {stime}")
+
+    #####
     stime = np.diff(t, prepend = t[0]*0.99)
     ms_per_24hrs = (stime) / (wtime/(60*60*24))  # ms simulated per 24 hours
+
+    # Lin added the overall speed 
+    wall_time = np.cumsum(wtime) # This is second
+    diff_time = (t[-1] - t[0]) # ms
+    speed = diff_time/(wall_time[-1]/(60*60)) # hr
+    print(f"Current speed (how many ms per wall time (hr) = {speed}")
 
     if cvode:
         lratio = np.diff(nliters, prepend=nliters[1]*0.99) / np.diff(nniters, prepend=nniters[1]*0.99)   # Ratio of linear to nolinear iterations
