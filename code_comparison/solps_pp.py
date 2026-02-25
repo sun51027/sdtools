@@ -299,6 +299,8 @@ class SOLPScase():
         bal["Pd+"] = bal["ne"] * bal["Td+"] * qe
 
         # First index in third dimension is always main ion neutral
+        # dab2 Atomic density 
+        # dmb2 Molecular density
         bal["Na"] = bal["dab2"][:-ignore_idx, :, 0]
         bal["Nm"] = bal["dmb2"][:-ignore_idx, :, 0]
         bal["Nn"] = bal["Na"] + bal["Nm"] * 2
@@ -311,6 +313,9 @@ class SOLPScase():
         bal["Pn"] = bal["Pa"] + bal["Pm"]
         bal["Tn"] = bal["Pn"] / bal["Nn"] / qe
         
+        # Lin added:
+        bal["Nd+"] = bal["na"][:-ignore_idx, :, 0] #Ion density from solps manual
+        bal["Nd"]  = bal["Na"] # I hope this is neutral density per cell?
         # Derive total fluxes (excl. drifts)
         bal["fhe_total"] = bal["fhe_cond"] + 5/3*bal["fhe_32"] + bal["fhe_thermj"]
         bal["fhi_total"] = bal["fhi_cond"] + 5/3*bal["fhi_32"]
