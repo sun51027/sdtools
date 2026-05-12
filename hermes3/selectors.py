@@ -489,6 +489,8 @@ def get_1d_poloidal_data(
     if target_first:
         df["Spol"] = df["Spol"].iloc[-1] - df["Spol"]
         df["Spar"] = df["Spar"].iloc[-1] - df["Spar"]
-        df = df.iloc[::-1]
+        # df = df.iloc[::-1]
+        # To reverse the index as well
+        df = df.iloc[::-1].reset_index(drop=True)
         
     return df

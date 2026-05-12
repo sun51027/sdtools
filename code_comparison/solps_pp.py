@@ -314,8 +314,10 @@ class SOLPScase():
         bal["Tn"] = bal["Pn"] / bal["Nn"] / qe
         
         # Lin added:
-        bal["Nd+"] = bal["na"][:-ignore_idx, :, 0] #Ion density from solps manual
+        bal["Nd+"] = bal["ne"] # quasi-neutral assumption 
+        # bal["Nd+"] = bal["na"][:-ignore_idx, :, 0] #Ion density from solps manual #This is 'nothing'
         bal["Nd"]  = bal["Na"] # I hope this is neutral density per cell?
+        bal["Pd"] = bal["Pa"]
         # Derive total fluxes (excl. drifts)
         bal["fhe_total"] = bal["fhe_cond"] + 5/3*bal["fhe_32"] + bal["fhe_thermj"]
         bal["fhi_total"] = bal["fhi_cond"] + 5/3*bal["fhi_32"]
@@ -374,7 +376,10 @@ class SOLPScase():
         bal["Sd+_iz"] = bal["eirene_mc_papl_sna_bal"][:,:,1,:].sum(axis = 2) / bal["vol"]  # Choose ion species and sum over strata
         bal["Sd+_rec"] = bal["eirene_mc_pppl_sna_bal"][:,:,1,:].sum(axis = 2) / bal["vol"]   # Choose ion species and sum over strata
         
-                
+       # Lin added 2026 April
+       # Not if this is correct ...
+        bal["Edd+_cx"] = bal["eirene_mc_eapl_shi_bal"].sum(axis = 2) / bal["vol"]
+
         self.bal = bal
         self.params = list(self.bal.keys())
 

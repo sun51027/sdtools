@@ -51,7 +51,7 @@ class CaseDB():
         casepath = self.casepaths[casename]
         options = BoutOptionsFile(os.path.join(casepath, "BOUT.inp"))
 
-        gridname = options["mesh"]["file"].replace('"','')
+        gridname = options["mesh"]["file"].replace('"','').strip()
 
         if gridname in self.gridpaths.keys():
             gridfilepath = self.gridpaths[gridname]
